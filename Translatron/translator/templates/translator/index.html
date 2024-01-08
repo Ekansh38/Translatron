@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{% static 'translator/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <form action="{% url 'index' %}" method="post">
+            {% csrf_token %}
+
+            <select name="source_lang">
+                {% for lang in langs %}
+                <option value="{{ lang }}">{{ lang }}</option>
+                {% endfor %}
+            </select>
+
+            <textarea name="source_text">
+                {{ source_text }}
+            </textarea>
+
+            <input type="submit" value="Translate">
+
+            <select name="target_lang">
+                {% for lang in langs %}
+                <option value="{{ lang }}">{{ lang }}</option>
+                {% endfor %}
+            </select>
+
+            <textarea disabled>
+                {{ target_text }} 
+            </textarea>
+
+        </form>
+    </body>
+</html>
