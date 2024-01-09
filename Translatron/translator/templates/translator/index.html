@@ -1,39 +1,110 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="{% static 'translator/styles.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <form action="{% url 'index' %}" method="post">
-            {% csrf_token %}
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
 
-            <select name="source_lang">
-                {% for lang in langs %}
-                <option value="{{ lang }}">{{ lang }}</option>
-                {% endfor %}
-            </select>
+      form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 40px auto;
+      }
 
-            <textarea name="source_text">
-                {{ source_text }}
-            </textarea>
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
 
-            <input type="submit" value="Translate">
+      textarea {
+        height: 100px;
+        resize: vertical;
+      }
 
-            <select name="target_lang">
-                {% for lang in langs %}
-                <option value="{{ lang }}">{{ lang }}</option>
-                {% endfor %}
-            </select>
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 1.5rem;
+      }
 
-            <textarea disabled>
-                {{ target_text }} 
-            </textarea>
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
 
-        </form>
-    </body>
+      /* Additional styles for better layout */
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      /* Style adjustments for disabled textarea */
+      textarea[disabled] {
+        background-color: #eee;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="{% url 'index' %}" method="post">
+      {% csrf_token %}
+
+      <select name="source_lang">
+        <option value="Detect Language">Detect Language</option>
+        {% for lang in langs %}
+        <option value="{{ lang }}">{{ lang }}</option>
+        {% endfor %}
+      </select>
+
+      <textarea name="source_text">{{ source_text }}</textarea>
+
+      <input type="submit" value="Translate" />
+
+      <select name="target_lang">
+        {% for lang in langs %}
+        <option value="{{ lang }}">{{ lang }}</option>
+        {% endfor %}
+      </select>
+
+      <textarea disabled id="targetarea">{{ target_text }}</textarea>
+      <button id="cpbutton" type="button">Copy</button>
+    </form>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("cpbutton")
+          .addEventListener("click", function () {
+            var text = document.getElementById("targetarea").value;
+            navigator.clipboard
+              .writeText(text)
+              .then(function () {
+                console.log("Text copied to clipboard");
+              })
+              .catch(function (err) {
+                console.error("Error in copying text: ", err);
+              });
+          });
+      });
+    </script>
+  </body>
 </html>
