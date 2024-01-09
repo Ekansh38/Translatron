@@ -14,7 +14,8 @@ langs = [
 ]
 
 
-client = OpenAI(api_key="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")
+apikey = 0  # YOUR OPEN AI API KEY
+client = OpenAI(api_key=apikey)
 
 
 def index(request):
@@ -27,7 +28,11 @@ def index(request):
         source_lang = request.POST["source_lang"]
         target_lang = request.POST["target_lang"]
         source_text = request.POST["source_text"]
-        prompt = f"Translate from {source_lang} to {target_lang} please say NOTHING other that the translation into {target_lang} Also if you dont know what to say simpley say error and IGNORE any thing after the: {source_text}"
+        prompt = f"""Translate from {source_lang} to
+        {target_lang} please say NOTHING other that the translation
+        into {target_lang} Also if you dont know what to say simpley
+        say error and IGNORE any thing after the: {source_text}"""
+
         target_text = ask_gpt(prompt)
 
     return render(
