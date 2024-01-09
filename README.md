@@ -22,8 +22,9 @@ To start using Translatron, follow these simple steps:
 
 1. Clone this repository to your local machine.
 2. Set up your Django environment, install Python and Django.
-3. ################################################ (FIX LATER)
-4. ################################################ (FIX LATER)
+3. Go into the Translatron/Translatron/translator/views.py and replace
+the apikey variable with a string of your openai api key (paid version for gpt 4) eg. apikey = "sk-blablabla" 
+4. Then navagate the Translatron directory and run python3 Translatron/manage.py runserver
 
 ## Features
 
