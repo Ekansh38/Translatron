@@ -14,7 +14,7 @@ langs = [
 ]
 
 
-apikey = 0  # YOUR OPEN AI API KEY
+apikey = "YOUR API KEY HERE"
 client = OpenAI(api_key=apikey)
 
 
